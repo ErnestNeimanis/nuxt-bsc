@@ -5,9 +5,15 @@ setActivePinia(createPinia())
 
 import {useWindowSize} from "@/composables/useWindowSize"
 import {useInView} from "@/composables/useInView"
+import {useScrollHandler} from "@/composables/useScrollHandler"
  const { largeWindow,mediumWindow,smallWindow } = useWindowSize();
+  const {create } = useScrollHandler();
 
 const counter = useCounterStore()
+
+onMounted(() => {
+ 
+})
 </script>
 
 <template>
@@ -19,6 +25,9 @@ const counter = useCounterStore()
   </div>
 <div>
   {{largeWindow}}
+</div>
+<div>
+  
 </div>
   </div>
 </template>
