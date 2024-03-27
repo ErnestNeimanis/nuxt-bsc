@@ -1,5 +1,6 @@
 <script setup lang="js">
 import { useCounterStore } from '~/stores/counter'
+import { useSlideInMenu } from '~/stores/useSlideInMenu'
 import { setActivePinia, createPinia } from 'pinia'
 setActivePinia(createPinia())
 
