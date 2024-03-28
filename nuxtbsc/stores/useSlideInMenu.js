@@ -1,4 +1,4 @@
-// stores/slideInMenu.js
+// stores/useSlideInMenu.js
 import { defineStore } from 'pinia';
 
 export const useSlideInMenu = defineStore('slideInMenu', {
@@ -8,12 +8,15 @@ export const useSlideInMenu = defineStore('slideInMenu', {
   actions: {
     openMenu() {
       this.isOpen = true;
+  
     },
     closeMenu() {
       this.isOpen = false;
+    
     },
     toggleMenu() {
       this.isOpen = !this.isOpen;
+       console.log(this.isOpen,"toggle")
     }
   }
 });
