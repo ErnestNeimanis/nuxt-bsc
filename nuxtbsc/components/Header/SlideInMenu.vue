@@ -11,7 +11,7 @@ const containerAnimationClasses = ref(
 )
 
 const menuAnimationClasses = ref(
-    "translate-x-[100%] idden"
+    "translate-x-[100%] hidden"
     )
 
 function openMenu(){
@@ -41,7 +41,7 @@ function closeMenu(){
 
      setTimeout(() => {
         menuAnimationClasses.value = secondStep
-     },200)
+     },500)
 }
 
 onMounted(()=>{
@@ -58,6 +58,7 @@ watch(()=>slideIn.isOpen,()=>{
     class="h-screen w-screen bg-orange-500 transition-all duration-500 absolute top-0"
     :class="menuAnimationClasses"
   >
+
     <div class="mt-24">
       <ul class="flex flex-col gap-4">
         <li v-for="(link, index) in nav" :key="index">
