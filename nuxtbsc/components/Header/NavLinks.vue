@@ -4,11 +4,11 @@ const nav = useNavLinks().navLinks;
 </script>
 <template>
   <div class="">
-    <ul>
+    <ul class="flex gap-4">
         <li v-for="(link, index) in nav" :key="index">
-            <div>
+            <div class="">
                 <NuxtLink :to="link.url">
-                    <div>
+                    <div class="">
                         <span>{{link.title}}</span>
                     </div>
                 </NuxtLink>

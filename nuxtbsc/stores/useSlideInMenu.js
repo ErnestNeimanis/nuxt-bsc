@@ -16,7 +16,6 @@ export const useSlideInMenu = defineStore('slideInMenu', {
     },
     toggleMenu() {
       this.isOpen = !this.isOpen;
-       console.log(this.isOpen,"toggle")
     }
   }
 });
