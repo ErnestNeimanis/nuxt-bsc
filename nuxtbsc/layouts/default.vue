@@ -4,10 +4,13 @@
 
 <template>
 <div>
-     <HeaderNavBar/>
-  <div>
+  <header>
+      <HeaderNavBar/>
+  </header>
+   
+  <main>
     <slot></slot>
-  </div>
+  </main>
 </div>
 
 

@@ -18,17 +18,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>index
-
-<div>
-    <p>The count is: {{ counter.count }}</p>
-    <button @click="counter.increment">Increment</button>
-  </div>
-<div>
-  {{largeWindow}}
-</div>
-<div>
-  
-</div>
+  <div>
+    aaaaaa
   </div>
 </template>
