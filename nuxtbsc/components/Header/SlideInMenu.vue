@@ -55,7 +55,7 @@ watch(()=>slideIn.isOpen,()=>{
 </script>
 <template>
   <div
-    class="h-screen w-screen bg-orange-500 transition-all duration-500 absolute top-0"
+    class="h-screen w-screen bg-orange-500 transition-all duration-500 absolute top-0 z-[998]"
     :class="menuAnimationClasses"
   >
 
