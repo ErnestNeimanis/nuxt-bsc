@@ -1,30 +1,34 @@
 <script setup lang="js">
-import axios from "axios";
+import { defineProps } from 'vue';
+
 const props = defineProps({
-  post: {
+   post: {
     title: "",
     featuredImg: "",
     content: "",
-  },
+  }
 });
 
-const post = props?.post;
+const post = props.post;
 </script>
+
 <template>
-  <div class=" " >
-    <div v-if="props.post">
-      <div class="">
-        <h1>{{ post.title }}</h1>
-      </div>
-      <div class="flex justify-center">
-        <img :src="post.featuredImg" alt="" />
-      </div>
-      <div>
-        <div v-html="post.content"></div>
-      </div>
+  
+  <div class="flex flex-col  
+     aspect-square
+  ">
+    <div class="flex justify-center items-center w h-4/5 h-96  ">
+ 
+        <img  :src="post.featuredImg" alt=""
+      class="w-full h-full object-cover"
+      >
+
     </div>
-    <div v-else>
-        post missing
+    <div class="flex justify-center items-center h-1/5 px-4 bg-slate-500">
+
+         <h1 class="text-5xl text-center bg-red-400   whitespace-nowrap overflow-hidden overflow-ellipsis">
+          {{post.title}}
+        </h1>
     </div>
   </div>
 </template>

@@ -69,16 +69,50 @@ onMounted(async() => {
 </script>
 
 <template>
-  <div v-if="postList">
-    <div v-for="post in postList" :key="post" class="px-8">
-      <div class="my-4">
-         <PostContent :post="post" />
+  <div v-if="postList" >
+    <div class="grid grid-cols-3  gap-12  my-4"
+    
+          :class="{
+          'grid-cols-3 px-12':largeWindow,
+          'grid-cols-2 px-6 ':mediumWindow,
+          'grid-cols-1  px-4':smallWindow
+          
+          }"
+
+    
+    >
+      <div  v-for="post in postList" :key="post.title">
+         <PostPreview :post="post"
+
+          :class="{
+          'hover:scale-105':largeWindow,
+          ' ':mediumWindow,
+          ' ':smallWindow
+          
+          }"
+
+          class="
+
+           border-4 border-red-700 transition-all duration-300"
+          /> 
+
+          <div class="border mt-8">
+
+          </div>
       </div>
-      <div class="border-4 border-black"></div>
-     
+        
     </div>
+   
     <div class="h-12 bg-blue-500">
         <button class="border-4" @click="load">Load more</button>
      </div>
   </div>
 </template>
+<style scoped>
+.gr {
+  display: grid;
+  grid-template-columns: repeat(auto-fill);
+ justify-items: center;
+  
+  }
+</style>
