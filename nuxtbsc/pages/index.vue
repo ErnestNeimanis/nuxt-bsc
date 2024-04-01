@@ -43,7 +43,7 @@ onMounted(async() => {
         {{mediumWindow}}
         </span>
     </div>
-    <div class="grid items-center flex-wrap gap-12  my-4"
+    <div class="grid  gap-12  my-4"
       :class="{
       'grid-cols-3 px-12':largeWindow,
       'grid-cols-2 px-8':mediumWindow,
