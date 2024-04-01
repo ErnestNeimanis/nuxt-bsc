@@ -14,10 +14,10 @@ const post = props.post;
 
 <template>
   
-  <div class="flex flex-col  
-     aspect-square
+  <div class="container flex flex-col w-full bg-blue-500 border-4 border-yellow-600
+ 
   ">
-    <div class="flex justify-center items-center w h-4/5 h-96  ">
+    <div class="image-container flex justify-center items-center   bg-fuchsia-600  ">
  
         <img  :src="post.featuredImg" alt=""
       class="w-full h-full object-cover"
@@ -32,3 +32,21 @@ const post = props.post;
     </div>
   </div>
 </template>
+<style scoped>
+
+.container{
+
+  aspect-ratio: 10 / 10;
+  background-color: blue;
+}
+.image-container{
+  widows: full;
+  height: 80%;
+
+  background-color: blue;
+}
+.title-container{
+  
+}
+
+</style>
