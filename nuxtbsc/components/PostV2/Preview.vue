@@ -2,7 +2,11 @@
 import { defineProps } from 'vue';
 
 const props = defineProps({
-   post: Object
+   post: {
+    title: "",
+    featuredImg: "",
+    content: "",
+  }
 });
 
 const post = props.post;
@@ -10,18 +14,19 @@ const post = props.post;
 
 <template>
   
-  <div class="container flex flex-col w-full bg-stone-200 p-4 hover:scale-105 cursor-pointer">
-  
-    <div class="image-container flex justify-center items-center   ">
+  <div class="container flex flex-col w-full bg-stone-200 p-7
  
-        <img  :src="post.featured_image" alt=""
+  ">
+    <div class="image-container flex justify-center items-center     ">
+ 
+        <img  :src="post.featuredImg" alt=""
       class="w-full h-full object-cover"
       >
 
     </div>
-    <div class="flex justify-center items-center h-1/5 px-4">
+    <div class="flex justify-center items-center h-1/5 px-4 ">
 
-         <h1 class="text-5xl text-center  whitespace-nowrap overflow-hidden overflow-ellipsis">
+         <h1 class="text-5xl text-center   whitespace-nowrap overflow-hidden overflow-ellipsis">
           {{post.title}}
         </h1>
     </div>
@@ -32,7 +37,7 @@ const post = props.post;
 .container{
 
   aspect-ratio: 10 / 10;
-
+  
 }
 .image-container{
   widows: full;

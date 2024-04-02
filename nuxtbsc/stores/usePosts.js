@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
 
-const BASE_URL = "https://public-api.wordpress.com/rest/v1.2/sites/groovediggers3.wordpress.com/posts/"
+const BASE_URL = "https://public-api.wordpress.com/rest/v1.1/sites/groovediggers3.wordpress.com"
 
 
 
@@ -15,7 +15,7 @@ export const usePosts = defineStore('posts', {
   actions: {
     async fetch(category = this.category, page = this.currentPage) {
       try {
-        const response = await axios.get(BASE_URL, {
+        const response = await axios.get(`${BASE_URL}/posts`, {
           params: {
             category: category,
             page: page,
@@ -23,11 +23,7 @@ export const usePosts = defineStore('posts', {
           },
         });
 
-        this.posts = response.data.posts.map(post => ({
-          title: post.title,
-          featuredImg: post.featured_image,
-          content: post.content,
-        }));
+        this.posts = response.data.posts.map(post => (post));
 
         this.category = category;
         this.currentPage = page;
@@ -36,7 +32,7 @@ export const usePosts = defineStore('posts', {
         return this.posts;
       } catch (error) {
         console.error('Error fetching posts:', error);
-        return []; // Return an empty array in case of error
+        return []; 
       }
     },
     async nextPage() {
@@ -48,12 +44,31 @@ export const usePosts = defineStore('posts', {
         this.currentPage -= 1;
         return await this.fetch();
       }
-      return this.posts; // Return the current posts if we're already at the first page
+      return this.posts;
     },
     async get(category) {
       this.category = category;
-      this.currentPage = 1; // Reset to page 1 whenever the category changes
+      this.currentPage = 1; 
       return await this.fetch();
+    },
+ 
+    async getPost({category=null,id=null,slug=null}){
+      if(!category){
+        throw new Error("post category not set");
+      }
+      if(slug){
+       
+        try {
+          const response = await axios.get(`${BASE_URL}/posts/slug:${slug}`,{})
+          console.log("store response",response.data)
+
+          return response.data
+
+        } catch (error) {
+          return error
+        }
+      }
+     
     }
   },
 });

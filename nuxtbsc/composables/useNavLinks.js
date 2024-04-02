@@ -12,6 +12,10 @@ export function useNavLinks() {
       title: "contact",
       url: "/contact",
     },
+     {
+      title: "posts",
+      url: "/posts",
+    },
   ];
 
   return {

@@ -1,26 +1,30 @@
 <script setup lang="js">
 import axios from "axios";
 const props = defineProps({
-  post: Object
+  post: {
+    title: "",
+    featuredImg: "",
+    content: "",
+  },
 });
 
 const post = props?.post;
 </script>
 <template>
-  <div class="px-8 " >
+  <div class=" " >
     <div v-if="props.post">
       <div class="">
-        <h1>{{ props.post.title }}</h1>
+        <h1>{{ post.title }}</h1>
       </div>
       <div class="flex justify-center">
-        <img :src="props.post.featured_image" alt="" />
+        <img :src="post.featuredImg" alt="" />
       </div>
       <div>
-        <div v-html="props.post.content"></div>
+        <div v-html="post.content"></div>
       </div>
     </div>
     <div v-else>
-       {{props.post}}
+        post missing
     </div>
   </div>
 </template>
