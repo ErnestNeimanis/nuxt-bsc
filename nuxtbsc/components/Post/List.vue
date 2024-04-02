@@ -47,6 +47,7 @@ onMounted(async() => {
 
 nextTick(() =>{
  useInView(loader.value,async() =>{
+    switchToLoader();
     loadButton.value = false;
     loaderInView.value = true;
     let loaded = await load();
@@ -54,13 +55,9 @@ nextTick(() =>{
     while(loaderInView.value && hasMore.value){
      loaded = await load()
      hasMore.value = loaded.length > 0
-    
+     
     }
-    setTimeout(() => {
-    if(hasMore.value){
-       loadButton.value = true;
-    }
-  }, 5000);
+  
  })
 
  useNotInView(loader.value,()=>{
@@ -71,13 +68,25 @@ nextTick(() =>{
  
 })
 
+function switchToLoadButton(){
+    setTimeout(() => {
+    if(hasMore.value){
+       loadButton.value = true;
+    }
+  }, 5000);
+}
 
+function switchToLoader(){
+  loadButton.value = false;
+}
 
+watch(loaderInView,switchToLoadButton)
 
 </script>
 <template>
  
   <div v-if="postList">
+   
     <div
       class="grid gap-12 my-4 px-4 grid-cols-1 sm:grid-cols-1 sm:px-8 md:grid-cols-2 md:px-12 lg:grid-cols-3 2xl:grid-cols-3"
     >
@@ -91,7 +100,7 @@ nextTick(() =>{
   
     <div v-if="hasMore"  ref="loader" class="flex justify-center h-12 ">
       <div v-if="loadButton">
-        <button class="border" @click="load">Load more</button>
+         <button class="border bg-blue-800 hover:bg-blue-500 text-white font-bold px-4 py-4 rounded-2xl cursor-pointer" @click="load">Load more</button>
       </div>
       <div v-else class="loader"></div>
     </div>
