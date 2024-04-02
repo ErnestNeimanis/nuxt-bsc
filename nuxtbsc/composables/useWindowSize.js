@@ -18,7 +18,6 @@ export function useWindowSize() {
   const extraLargeWindow = computed(() => windowWidth.value >= extraLarge.value);
 
   function update() {
-    console.log("updating")
     windowWidth.value = window.innerWidth;
     windowHeight.value = window.innerHeight;
   }

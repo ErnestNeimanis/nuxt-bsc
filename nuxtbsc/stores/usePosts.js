@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
 
-const BASE_URL = "https://public-api.wordpress.com/rest/v1.1/sites/groovediggers3.wordpress.com/posts/"
+const BASE_URL = "https://public-api.wordpress.com/rest/v1.2/sites/groovediggers3.wordpress.com/posts/"
 
 
 
