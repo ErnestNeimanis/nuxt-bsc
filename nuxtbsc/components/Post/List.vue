@@ -17,7 +17,8 @@ const {create } = useScrollHandler();
 const posts = usePosts();
 const postList = ref([])
 
-const loader = ref(null)
+const loader = ref(null);
+const loadButton = ref(false)
 
 const loaderInView = ref(true);
 const hasMore = ref(true)
@@ -46,20 +47,30 @@ onMounted(async() => {
 
 nextTick(() =>{
  useInView(loader.value,async() =>{
+    loadButton.value = false;
     loaderInView.value = true;
     let loaded = await load();
     hasMore.value = loaded.length > 0
     while(loaderInView.value && hasMore.value){
-      await load()
+     loaded = await load()
+     hasMore.value = loaded.length > 0
+    
     }
+    setTimeout(() => {
+    if(hasMore.value){
+       loadButton.value = true;
+    }
+  }, 5000);
  })
 
  useNotInView(loader.value,()=>{
   loaderInView.value = false;
+  loadButton.value = false;
  })
 })
  
 })
+
 
 
 
@@ -79,7 +90,10 @@ nextTick(() =>{
     </div>
   
     <div v-if="hasMore"  ref="loader" class="flex justify-center h-12 ">
-      <div class="loader"></div>
+      <div v-if="loadButton">
+        <button class="border" @click="load">Load more</button>
+      </div>
+      <div v-else class="loader"></div>
     </div>
   </div>
 </template>
