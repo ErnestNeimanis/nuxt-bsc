@@ -59,8 +59,6 @@ export const usePosts = defineStore('posts', {
        
         try {
           const response = await axios.get(`${BASE_URL}/posts/slug:${slug}`,{})
-        
-
           return response.data
 
         } catch (error) {

@@ -15,19 +15,18 @@ onMounted(async() =>{
     slug.value = route.params.slug
     post.value = await postsStore.getPost({category:'concerts',slug:slug.value})
     }
-    const headings = extractHeadings(post.value.content)
+    const headings = extractHTMLContent(post.value.content,'h2')
     heading.value = headings
 
     
 })
 
-function extractHeadings(htmlString) {
- 
+function extractHTMLContent(htmlString, tagName) {
   const parser = new DOMParser();
   const doc = parser.parseFromString(htmlString, 'text/html');
-  const headings = doc.querySelectorAll('h1, h2, h3, h4, h5, h6');
-  const headingTexts = Array.from(headings).map(heading => heading.textContent.trim());
-  return headingTexts 
+  const elements = doc.querySelectorAll(tagName); // Use the tagName parameter
+  const elementsTexts = Array.from(elements).map(element => element.textContent.trim());
+  return elementsTexts;
 }
 </script>
 <template>
