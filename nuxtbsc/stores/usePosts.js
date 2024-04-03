@@ -19,7 +19,7 @@ export const usePosts = defineStore('posts', {
           params: {
             category: category,
             page: page,
-            number: 3,
+            number: 6,
           },
         });
 
@@ -27,8 +27,7 @@ export const usePosts = defineStore('posts', {
 
         this.category = category;
         this.currentPage = page;
-        
-        // Return the updated posts array
+
         return this.posts;
       } catch (error) {
         console.error('Error fetching posts:', error);
@@ -60,7 +59,7 @@ export const usePosts = defineStore('posts', {
        
         try {
           const response = await axios.get(`${BASE_URL}/posts/slug:${slug}`,{})
-          console.log("store response",response.data)
+        
 
           return response.data
 
@@ -71,4 +70,6 @@ export const usePosts = defineStore('posts', {
      
     }
   },
+  
+
 });

@@ -87,9 +87,6 @@ watch(loaderInView,switchToLoadButton)
     >
     <div v-for="post in postList" :key="post.title">
        <NuxtLink :to="`/posts/${post.slug}`" >
-        <div>
-          {{post.slug}}
-        </div>
           <PostPreview :post="post" class="transition-all duration-300"/>
       </NuxtLink>
     </div>
