@@ -9,39 +9,30 @@ const post = props.post;
 </script>
 
 <template>
-  
-  <div class="container flex flex-col w-full bg-stone-200 p-4 hover:scale-105 cursor-pointer">
-  
-    <div class="image-container flex justify-center items-center   ">
- 
-        <img  :src="post.featured_image" alt=""
-      class="w-full h-full object-cover"
-      >
-
+  <div class="container flex flex-col w-full p-4 cursor-pointer">
+    
+    <div class="image-container flex justify-center items-center">
+   
+        <img :src="post.featured_image" alt="" class="w-full h-full object-cover" />
+    
     </div>
-    <div class="flex justify-center items-center h-1/5 px-4">
-
-         <h1 class="text-5xl text-center  whitespace-nowrap overflow-hidden overflow-ellipsis">
-          {{post.title}}
-        </h1>
+    <div class="flex items-center h-1/5 px-4 border-b">
+     <NuxtLink :to="`/posts/${post.slug}`">
+      <h1 class="text-lg font-bold whitespace-nowrap overflow-hidden overflow-ellipsis">
+        {{ post.title }}
+      </h1>
+         </NuxtLink>
     </div>
   </div>
 </template>
 <style scoped>
-
-.container{
-
+.container {
   aspect-ratio: 10 / 10;
-
 }
-.image-container{
+.image-container {
   widows: full;
   height: 80%;
-
-
 }
-.title-container{
-  
+.title-container {
 }
-
 </style>

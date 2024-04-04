@@ -86,9 +86,9 @@ watch(loaderInView,switchToLoadButton)
       class="grid gap-12 my-4 px-4 grid-cols-1 sm:grid-cols-1 sm:px-8 md:grid-cols-2 md:px-12 lg:grid-cols-3 2xl:grid-cols-3"
     >
     <div v-for="post in postList" :key="post.title">
-       <NuxtLink :to="`/posts/${post.slug}`" >
+      
           <PostPreview :post="post" class="transition-all duration-300"/>
-      </NuxtLink>
+ 
     </div>
      
     </div>
