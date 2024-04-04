@@ -83,11 +83,11 @@ watch(loaderInView,switchToLoadButton)
 <template>
   <div v-if="postList">
     <div
-      class="grid gap-12 my-4 px-4 grid-cols-1 sm:grid-cols-1 sm:px-8 md:grid-cols-2 md:px-12 lg:grid-cols-3 2xl:grid-cols-3"
+      class="grid gap-12 my-4 px-4 grid-cols-1 sm:grid-cols-1 sm:px-8 md:grid-cols-2 md:px-12 lg:grid-cols-3 2xl:grid-cols-4"
     >
     <div v-for="post in postList" :key="post.title">
       
-          <PostPreview :post="post" class="transition-all duration-300"/>
+          <PostPreview :post="post" class=""/>
  
     </div>
      

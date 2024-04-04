@@ -1,28 +1,39 @@
 <script setup lang="js">
 import { defineProps } from 'vue';
-
+import {useRouter} from 'vue-router'
+import { formatDistanceToNow } from 'date-fns';
 const props = defineProps({
    post: Object
 });
 
+const router = useRouter();
 const post = props.post;
+
+const formattedDate = computed(() => {
+  return formatDistanceToNow(new Date(props.post.date), { addSuffix: true });
+});
+
+function toPost() {
+  router.push(`/posts/${props.post.slug}`);
+}
 </script>
 
 <template>
-  <div class="container flex flex-col w-full p-4 cursor-pointer">
+  <div class="container flex flex-col w-full  ">
     
-    <div class="image-container flex justify-center items-center">
-   
-        <img :src="post.featured_image" alt="" class="w-full h-full object-cover" />
-    
+    <div click="toPost" class="image-container flex justify-center items-center   h-2/3">
+        <img @click="toPost" :src="post.featured_image" alt="" class="w-full h-full object-cover transition-all duration-500 hover:opacity-95  cursor-pointer" />
     </div>
-    <div class="flex items-center h-1/5 px-4 border-b">
-     <NuxtLink :to="`/posts/${post.slug}`">
-      <h1 class="text-lg font-bold whitespace-nowrap overflow-hidden overflow-ellipsis">
+
+    <div class="flex flex-col justify-center h-1/3 px-4 border-b  ">
+      <h1 @click="toPost" class="text-lg  hover:text-green-800 font-bold whitespace-nowrap overflow-hidden overflow-ellipsis cursor-pointer">
         {{ post.title }}
       </h1>
-         </NuxtLink>
+      <div class="  ">
+        <span @click="toPost" class="text-sm text-gray-500 hover:underline cursor-pointer">{{ formattedDate }}</span>
+      </div>
     </div>
+
   </div>
 </template>
 <style scoped>
@@ -30,8 +41,7 @@ const post = props.post;
   aspect-ratio: 10 / 10;
 }
 .image-container {
-  widows: full;
-  height: 80%;
+ 
 }
 .title-container {
 }
