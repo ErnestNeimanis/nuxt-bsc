@@ -41,7 +41,7 @@ function toggle(){
       <HeaderHamburger ref="hamburger" @open="open" @close="close" class="" />
     </div>
     <div class="w-screen">
-      <HeaderSlideInMenu ref="slideIn" />
+      <HeaderSlideInMenu ref="slideIn" @close="close" />
     </div>
   </div>
 </template>

@@ -7,6 +7,7 @@ const nav = useNavLinks().navLinks;
 
 const active = ref(false)
 
+const emit = defineEmits(['open','close'])
 defineExpose({
   open,close,
   getState
@@ -22,7 +23,7 @@ const menuAnimationClasses = ref(
 
 function open(){
     active.value = true;
-
+    emit('open')
     const containerStep = ""
 
     const firstStep = "translate-x-[100%]"
@@ -38,8 +39,8 @@ function open(){
 }
 function close(){
 
-     active.value = false;
-
+    active.value = false;
+    
     const containerStep = "hidden"
 
     const firstStep = "translate-x-[100%]"
@@ -78,7 +79,7 @@ watch(()=>slideIn.isOpen,()=>{
       <ul class="flex flex-col gap-4">
         <li v-for="(link, index) in nav" :key="index">
           <div class="flex justify-center border-4">
-            <NuxtLink :to="link.url">
+            <NuxtLink @click="emit('close')" :to="link.url">
               <div class="text-white" @click="slideIn.isOpen = false">
                 <span>{{ link.title }}</span>
               </div>
