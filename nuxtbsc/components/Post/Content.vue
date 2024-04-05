@@ -9,11 +9,11 @@ const props = defineProps({
 
 const html = useHTMLContent();
 
-const h2 = ref([])
+const h1 = ref([])
 const img = ref([])
 onMounted(async() => {
-   h2.value = html.extractAll(props.post.content,'h2')
-   props.post.content = html.removeFirst(props.post.content,'h2')
+   h1.value = html.extractAll(props.post.content,'h1')
+   props.post.content = html.removeFirst(props.post.content,'h1')
 
   img.value = html.extractImageUrls(props.post.content, 'img')
   console.log(toRaw(img.value))
@@ -35,7 +35,7 @@ const post = props?.post;
       <h1 class="text-4xl text-center font-bold text-gray-900">{{ props.post.title }}</h1>
     
       <p class="text-center text-gray-500 text-sm mt-2">{{ formattedDate }}</p>
-      <div class="text-xl text-gray-700" v-if="h2.length > 0">
+      <div  class="text-xl text-gray-700" v-if="h1.length > 0">
         <h2 class="font-semibold text-center">{{ h1[0] }}</h2>
       </div>
       <div>

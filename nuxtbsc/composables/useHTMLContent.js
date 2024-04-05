@@ -12,9 +12,9 @@ export function useHTMLContent() {
   function extractImageUrls(htmlString) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlString, 'text/html');
-    const images = doc.querySelectorAll('img'); // Select all <img> elements
+    const images = doc.querySelectorAll('img');
 
-    const imageUrls = Array.from(images).map(image => image.src.trim()); // Extract the 'src' attribute
+    const imageUrls = Array.from(images).map(image => image.src.trim());
     return imageUrls;
 }
 
@@ -35,7 +35,6 @@ export function useHTMLContent() {
   }
 
 
-
    function removeAll(htmlString, tagName) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlString, 'text/html');
@@ -50,7 +49,6 @@ export function useHTMLContent() {
   }
 
   
-
   function addClassesToElements(htmlString, tagName, classes) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlString, 'text/html');
@@ -73,7 +71,6 @@ export function useHTMLContent() {
 
 
 
-
   return { extractAll,
     extractImageUrls,
     removeAll,
@@ -81,3 +78,7 @@ export function useHTMLContent() {
     addClassesToElements
   };
 }
+
+
+
+
