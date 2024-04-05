@@ -57,9 +57,9 @@ export function useHTMLContent() {
     const elements = doc.querySelectorAll(tagName);
 
     elements.forEach(element => {
-        // Add the classes to each element. Splitting the classes string into an array allows for adding multiple classes.
+        
         classes.split(" ").forEach(className => {
-            if (className.trim()) { // Ensure the className is not just whitespace
+            if (className.trim()) { 
                 element.classList.add(className.trim());
             }
         });
