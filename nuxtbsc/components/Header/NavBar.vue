@@ -4,7 +4,11 @@ import { useSlideInMenu } from '../../stores/useSlideInMenu';
 import {useWindowSize} from "@/composables/useWindowSize"
 
 const {largeWindow, mediumWindow, smallWindow} = useWindowSize();
-const slideIn = useSlideInMenu();
+
+const mobileMenu = ref(null)
+
+
+
 
 </script>
 
@@ -22,7 +26,7 @@ const slideIn = useSlideInMenu();
 
 
 
-   <HeaderMobileMenu ref="mobile" v-if="!largeWindow" />
+   <HeaderMobileMenu ref="mobileMenu" v-if="!largeWindow" />
    </div>
 
 </template>
