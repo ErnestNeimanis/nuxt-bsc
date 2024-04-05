@@ -4,7 +4,13 @@ import { useSlideInMenu } from '../../stores/useSlideInMenu';
 
 const slideIn = useSlideInMenu();
 const nav = useNavLinks().navLinks;
-const open = ref(false)
+
+const active = ref(false)
+
+defineExpose({
+  open,close,
+  getState
+})
 
 const containerAnimationClasses = ref(
     "hidden"
@@ -14,7 +20,9 @@ const menuAnimationClasses = ref(
     "translate-x-[100%] hidden"
     )
 
-function openMenu(){
+function open(){
+    active.value = true;
+
     const containerStep = ""
 
     const firstStep = "translate-x-[100%]"
@@ -28,7 +36,10 @@ function openMenu(){
         menuAnimationClasses.value = secondStep
      },1)
 }
-function closeMenu(){
+function close(){
+
+     active.value = false;
+
     const containerStep = "hidden"
 
     const firstStep = "translate-x-[100%]"
@@ -44,13 +55,17 @@ function closeMenu(){
      },500)
 }
 
+function getState(){
+  return active.value
+}
+
 onMounted(()=>{
 
 })
 
 
 watch(()=>slideIn.isOpen,()=>{
-    return slideIn.isOpen ? openMenu() : closeMenu();
+    return slideIn.isOpen ? open() : close();
 })
 </script>
 <template>
