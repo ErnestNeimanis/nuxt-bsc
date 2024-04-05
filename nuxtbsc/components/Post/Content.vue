@@ -10,10 +10,14 @@ const props = defineProps({
 const html = useHTMLContent();
 
 const h2 = ref([])
-
+const img = ref([])
 onMounted(async() => {
    h2.value = html.extractAll(props.post.content,'h2')
    props.post.content = html.removeFirst(props.post.content,'h2')
+
+  img.value = html.extractImageUrls(props.post.content, 'img')
+  console.log(toRaw(img.value))
+  props.post.content = html.addClassesToElements(props.post.content,'img','min-w-full border-4 border-black my-8')
 });
 
 const formattedDate = computed(() => {
@@ -29,25 +33,27 @@ const post = props?.post;
   <div class="">
     <div v-if="props.post" class="space-y-6 mt-12">
       <h1 class="text-4xl text-center font-bold text-gray-900">{{ props.post.title }}</h1>
-      <!-- Displaying formatted date below the title -->
+    
       <p class="text-center text-gray-500 text-sm mt-2">{{ formattedDate }}</p>
       <div class="text-xl text-gray-700" v-if="h2.length > 0">
-        <h2 class="font-semibold text-center">{{ h2[0] }}</h2>
+        <h2 class="font-semibold text-center">{{ h1[0] }}</h2>
       </div>
       <div>
-        {{props.post.category}}
+        {{ props.post.category }}
       </div>
       <div class="flex justify-center px-9">
-        <img :src="props.post.featured_image" alt="" class="rounded-lg w-full shadow-md"/>
+        <img
+          :src="props.post.featured_image"
+          alt=""
+          class="rounded-lg w-full shadow-md"
+        />
       </div>
       <div class="flex justify-center">
         <div v-html="props.post.content" class="border-black max-w-4xl"></div>
       </div>
     </div>
     <div v-else>
-       <p class="text-gray-500">Loading post...</p>
+      <p class="text-gray-500">Loading post...</p>
     </div>
   </div>
 </template>
-
-
