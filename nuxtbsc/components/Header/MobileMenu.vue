@@ -37,7 +37,7 @@ function toggle(){
 </script>
 <template>
   <div>
-    <div v-if="!largeWindow" class="absolute top-4 right-2 z-[999]">
+    <div v-if="!largeWindow" class="absolute top-1 right-2 z-[999]">
       <HeaderHamburger ref="hamburger" @open="open" @close="close" class="" />
     </div>
     <div class="w-screen">

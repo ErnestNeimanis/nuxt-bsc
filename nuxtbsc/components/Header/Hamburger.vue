@@ -68,7 +68,7 @@ watch(active, animate);
 
 </script>
 <template>
-  <div class="p-3 rounded-md bg-indigo-950">
+  <div class="p-3  border">
     <div @click="(active = !active), active ? $emit('open') : $emit('close')"
       class=" flex flex-col justify-evenly h-[30px] w-[30px] ">
       <div :class="{ 'translate-y-2.5': step1, 'rotate-45': step2 }"
