@@ -6,8 +6,8 @@ const route = useRoute();
 const nav = useNavLinks().navLinks;
 </script>
 <template>
-  <div class="w-full">
-    <ul class="flex justify-center gap-56">
+  
+    <ul class="flex justify-center ">
         <li v-for="(link, index) in nav" :key="index">
             <div class="">
                 <NuxtLink :to="link.url">
@@ -18,6 +18,6 @@ const nav = useNavLinks().navLinks;
             </div>
         </li>
     </ul>
-  </div>
+ 
 </template>
 

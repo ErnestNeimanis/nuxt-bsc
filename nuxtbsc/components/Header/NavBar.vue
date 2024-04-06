@@ -1,9 +1,10 @@
 <script setup lang="js">
-
+import {useRouter } from 'vue-router'
 import { useSlideInMenu } from '../../stores/useSlideInMenu';
 import {useWindowSize} from "@/composables/useWindowSize"
 
 const {largeWindow, mediumWindow, smallWindow} = useWindowSize();
+const router = useRouter();
 
 const mobileMenu = ref(null)
 
@@ -15,12 +16,12 @@ const mobileMenu = ref(null)
 <template>
 
 <div class="min-w-[400px] border-6 border-black">
-  <div class="flex justify-start gap-56 px-2 items-end bg-blue-600 h-24 ">
-    <div class="h-full   border-black" >
+  <div class="flex justify-start gap-56 px-2 items-end bg-black h-16 ">
+    <div @mousedown="router.push('/')" class="logo h-full  p-2 cursor-pointer" >
         <img class="max-h-full " src="@/assets/images/images.png" alt="">
     </div>
-    <div v-if="largeWindow" class="flex justify-center items-end h-full borde">
-      <HeaderNavLinks class="text-white " />
+    <div v-if="largeWindow" class="flex justify-center items-end mb-2 h-full borde">
+      <HeaderNavLinks class="text-white text-3xl max-w-2xl  gap-x-20 " />
     </div>   
   </div>
 

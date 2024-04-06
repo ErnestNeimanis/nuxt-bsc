@@ -1,19 +1,19 @@
 export function useNavLinks() {
   const navLinks = [
     {
-      title: "home",
+      title: "Home",
       url: "/",
     },
     {
-      title: "about",
+      title: "About",
       url: "/about",
     },
     {
-      title: "contact",
+      title: "Contact",
       url: "/contact",
     },
      {
-      title: "posts",
+      title: "Posts",
       url: "/posts",
     },
   ];
