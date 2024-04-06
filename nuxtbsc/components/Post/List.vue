@@ -81,9 +81,9 @@ function switchToLoader(){
 watch(loaderInView,switchToLoadButton)
 </script>
 <template>
-  <div v-if="postList">
+  <div v-if="postList" class="">
     <div
-      class="grid gap-12 my-4 px-4 grid-cols-1 sm:grid-cols-1 sm:px-8 md:grid-cols-2 md:px-12 lg:grid-cols-3 2xl:grid-cols-4"
+      class="grid  px-8 gap-12 my-4  grid-cols-1 sm:grid-cols-1 sm:px-8 md:grid-cols-2 md:px-12 lg:grid-cols-3 2xl:grid-cols-3"
     >
     <div v-for="post in postList" :key="post.title">
       
