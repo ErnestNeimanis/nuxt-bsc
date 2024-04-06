@@ -4,7 +4,7 @@
 
 <template>
 <div>
-  <header>
+  <header class="sticky top-0 z-30">
       <HeaderNavBar/>
   </header>
    
