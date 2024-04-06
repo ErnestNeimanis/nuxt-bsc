@@ -11,6 +11,7 @@ export const usePosts = defineStore('posts', {
     posts: [],
     category: '',
     currentPage: 1,
+    perPage: 3
   }),
   actions: {
     async fetch(category = this.category, page = this.currentPage) {
@@ -19,7 +20,7 @@ export const usePosts = defineStore('posts', {
           params: {
             category: category,
             page: page,
-            number: 6,
+            number: this.perPage,
           },
         });
 
