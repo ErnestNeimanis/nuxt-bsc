@@ -48,8 +48,9 @@ const post = props?.post;
           class="rounded-lg w-full shadow-md"
         />
       </div>
-      <div class="flex justify-center">
-        <div v-html="props.post.content" class="border-black max-w-4xl"></div>
+      <div class="flex justify-center px-10">
+        <div v-html="props.post.content" class="border-black ">
+        </div>
       </div>
     </div>
     <div v-else>
