@@ -17,11 +17,11 @@ const mobileMenu = ref(null)
 
 <div class="min-w-[400px] border-6 border-black">
   <div class="flex justify-start gap-56 px-2 items-end bg-black h-16 ">
-    <div @mousedown="router.push('/')" class="logo h-full  p-2 cursor-pointer" >
+    <div @mousedown="router.push('/')" class="logo flex justify-center items-center h-full   cursor-pointer" >
         <img class="max-h-full " src="@/assets/images/images.png" alt="">
     </div>
-    <div v-if="largeWindow" class="flex justify-center items-end mb-2 h-full borde">
-      <HeaderNavLinks class="text-white text-3xl max-w-2xl  gap-x-20 " />
+    <div v-if="largeWindow" class="flex justify-center items-end h-full w-full">
+      <HeaderNavLinks class="text-white text-3xl max-w-2x w-full " />
     </div>   
   </div>
 
