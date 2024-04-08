@@ -52,7 +52,7 @@ export const usePosts = defineStore('posts', {
       return await this.fetch();
     },
  
-    async getPost({category=null,id=null,slug=null}){
+    async getPost({category=null,id=null,slug=null,title=null}){
       if(!category){
         throw new Error("post category not set");
       }

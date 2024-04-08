@@ -16,7 +16,7 @@ onMounted(async() => {
    props.post.content = html.removeFirst(props.post.content,'h1')
 
   img.value = html.extractImageUrls(props.post.content, 'img')
-  console.log(toRaw(img.value))
+ 
   props.post.content = html.addClassesToElements(props.post.content,'img','min-w-full border-4 border-black my-8')
 });
 

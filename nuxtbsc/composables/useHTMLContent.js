@@ -18,7 +18,6 @@ export function useHTMLContent() {
     return imageUrls;
 }
 
-
     function removeFirst(htmlString, tagName) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlString, 'text/html');
@@ -34,7 +33,6 @@ export function useHTMLContent() {
     return modifiedHtmlString;
   }
 
-
    function removeAll(htmlString, tagName) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlString, 'text/html');
@@ -48,7 +46,6 @@ export function useHTMLContent() {
     return modifiedHtmlString;
   }
 
-  
   function addClassesToElements(htmlString, tagName, classes) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlString, 'text/html');
@@ -68,8 +65,6 @@ export function useHTMLContent() {
 
     return modifiedHtmlString;
 }
-
-
 
   return { extractAll,
     extractImageUrls,

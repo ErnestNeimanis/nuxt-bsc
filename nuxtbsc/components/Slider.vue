@@ -1,23 +1,3 @@
-<template>
-  <div
-    ref="sliderContainer"
-    class="slider-container bg-blue-500"
-    @mousedown="startDragging"
-    @touchstart="startDragging"
-    @mouseup="stopDragging"
-    @mouseleave="stopDragging"
-    @touchend="stopDragging"
-  >
-    <div
-      ref="sliderContent"
-      class="slider-content border-4 border-black"
-      :style="{ transform: `translateX(${currentPosition}px)` }"
-    >
-      <slot></slot>
-    </div>
-  </div>
-</template>
-
 <script setup lang="js">
 
 
@@ -30,6 +10,8 @@ const lastPosition = ref(0);
 const velocity = ref(0);
 const lastTime = ref(0);
 
+
+
 function startDragging(event) {
   isDragging.value = true;
   startPosition.value = event.type.includes('mouse') ? event.pageX : event.touches[0].pageX;
@@ -40,6 +22,7 @@ function startDragging(event) {
   // Add event listeners for mousemove and touchmove
   document.addEventListener('mousemove', dragging);
   document.addEventListener('touchmove', dragging);
+
 }
 
 function dragging(event) {
@@ -64,7 +47,7 @@ function stopDragging() {
 
   // Apply inertia
   const inertia = () => {
-    currentPosition.value += velocity.value * 10; // Adjust inertia factor here
+    currentPosition.value += velocity.value * 5; // Adjust inertia factor here
     velocity.value *= 0.95; // Adjust friction here
     if (Math.abs(velocity.value) > 0.01) {
       requestAnimationFrame(inertia);
@@ -73,6 +56,29 @@ function stopDragging() {
   requestAnimationFrame(inertia);
 }
 </script>
+
+
+
+<template>
+  <div
+    ref="sliderContainer"
+    class="slider-container  bg-blue-100"
+    @mousedown="startDragging"
+    @touchstart="startDragging"
+    @mouseup="stopDragging"
+    @mouseleave="stopDragging"
+    @touchend="stopDragging"
+  >
+    <div
+      ref="sliderContent"
+      class="slider-content border-4   "
+      :style="{ transform: `translateX(${currentPosition}px)` }"
+    >
+      <slot></slot>
+    </div>
+  </div>
+</template>
+
 
 <style scoped>
 .slider-container {
