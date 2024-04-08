@@ -5,6 +5,8 @@ const posts = usePosts();
 const html = useHTMLContent();
 const imageList = ref([])
 
+const contentContainer = ref(null)
+
 onMounted(async() => {
     const response = await posts.getPost({ category:"galleries",slug:"my-test-gallery"});
     const images = html.extractImageUrls(response.content)
