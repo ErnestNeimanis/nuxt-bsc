@@ -88,7 +88,7 @@ onMounted(() => {
 <template>
   <div
     ref="sliderContainer"
-    class="slider-container  bg-blue-100"
+    class="slider-container  bg-blue-100 w-full h-72   border-4"
     @mousedown="startDragging"
     @touchstart="startDragging"
     @mouseup="stopDragging"

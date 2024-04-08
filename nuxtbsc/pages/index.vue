@@ -6,12 +6,48 @@ import  {usePosts} from '~/stores/usePosts'
 import {useWindowSize} from "@/composables/useWindowSize"
 import {useInView} from "@/composables/useInView"
 import {useScrollHandler} from "@/composables/useScrollHandler"
+const posts = usePosts();
+const html = useHTMLContent();
+const imageList = ref([])
 
+onMounted(async() => {
+    const response = await posts.getPost({ category:"galleries",slug:"my-test-gallery"});
+    const images = html.extractImageUrls(response.content)
+    imageList.value = [...imageList.value,...images];
+    
 
+    nextTick(()=>{
+  
+    })
+  
+  
+
+})
 </script>
 
 <template>
- <div>
-    <SliderContent/>
+ <div class="w-full px-8">
+    <SliderContent> 
+
+  <div v-for="image in imageList" :key="image" class="ratio  h-72  bg-blue-500"
+          
+            >
+                <div class="w-full h-2/3 border-4">
+                     <img :src="image" class="object-cover h-full w-full" alt="">
+                </div>
+                <div class="h-1/3 flex justify-center items-center ">
+                    <div class="px-4 overflow-hidden overflow-ellipsis">
+                        <span class="whitespace-nowrap ">
+                            Some textssssss</span>
+                    </div>
+                </div>
+            </div>
+
+    </SliderContent>
  </div>
 </template>
+<style scoped>
+.ratio {
+  aspect-ratio: 10 / 10;
+}
+</style>
