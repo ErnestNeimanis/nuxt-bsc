@@ -71,12 +71,12 @@ function checkEdges() {
  // console.log( `containerLeft ${containerRect.right}`)
   //console.log(`containerRectRLeft ${containerRect.left}`, `contentRectLeft ${contentRect.left}`)
   //console.log(`containerRectRight ${containerRect.right}`, `contentRectRight ${contentRect.right}`)
-  console.log(`contentW ${distance}`)
+  //console.log(`contentW ${contentW}`)
  // console.log(`Left Edge Closer to Center By: ${leftEdgeComparison}, Right Edge Closer to Center By: ${rightEdgeComparison}`);
 }
 onMounted(() => {
   nextTick(() =>{
-    checkEdges()
+    // checkEdges()
       
   })
 
@@ -97,9 +97,9 @@ onMounted(() => {
   >
     <div
       ref="sliderContent"
-      class="slider-content border-4   "
+      class="slider-content border-4 bg-black  "
       :style="{ transform: `translateX(${currentPosition}px)` }"
-      
+      style="width: max-content"
     >
     
       <slot></slot>
