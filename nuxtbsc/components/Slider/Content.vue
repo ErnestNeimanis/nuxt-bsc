@@ -35,7 +35,7 @@ function startDragging(event) {
 }
 
 function dragging(event) {
-  checkEdges()
+
   if (!isDragging.value) return;
   const x = event.type.includes('mouse') ? event.pageX : event.touches[0].pageX;
   const delta = x - lastPosition.value;
@@ -52,6 +52,9 @@ function dragging(event) {
   const inertiaActive = ref(false)
 function stopDragging() {
   if (!isDragging.value) return;
+
+ 
+
   isDragging.value = false;
   document.removeEventListener('mousemove', dragging);
   document.removeEventListener('touchmove', dragging);
@@ -64,6 +67,13 @@ function stopDragging() {
 
     currentPosition.value += adjustWithinBounds(currentPosition.value,inertiaFactor); // Adjust inertia factor here
     velocity.value *= 0.99; // Adjust friction here
+
+    if(currentPosition.value >= 0 || 
+    currentPosition.value <= -(contentContainer.value.clientWidth - sliderContainer.value.clientWidth)){
+       readjustSlider();
+      return;
+    }
+
     if (Math.abs(velocity.value) > 0.01) {
       requestAnimationFrame(inertia);
     } else{
@@ -71,19 +81,36 @@ function stopDragging() {
     }
   };
   requestAnimationFrame(inertia);
+  if(!inertiaActive.value){
+    readjustSlider();
+  }
 }
 
 
-
+function readjustSlider(){
+  console.log("readjusting")
+  const overflow = 20
+  const rightSide = -(contentContainer.value.clientWidth - sliderContainer.value.clientWidth)
+  if(currentPosition.value < rightSide){
+    currentPosition.value = rightSide;
+    return
+  }
+  const leftSide = 0;
+  if(currentPosition.value > leftSide ){
+    currentPosition.value = 0;
+  }
+}
 
 watch(inertiaActive,()=>{
-  console.log(`inertiaActive: ${inertiaActive.value}`)
+ if(!inertiaActive.value){
+    readjustSlider();
+  }
 })
 
 function adjustWithinBounds(current, adjustment) {
-  const overflow = 20
+  const overflow = 50
 
-  const lowerBound = -(contentContainer.value.clientWidth - sliderContainer.value.clientWidth) +overflow
+  const lowerBound = -(contentContainer.value.clientWidth - sliderContainer.value.clientWidth) -overflow
   const upperBound = 0 +overflow;
   
 
@@ -94,36 +121,9 @@ function adjustWithinBounds(current, adjustment) {
 }
 
 
-function checkEdges() {
-  const viewportCenter = window.innerWidth / 2;
-  const containerRect = sliderContainer.value.getBoundingClientRect();
-  const contentRect = contentContainer.value.getBoundingClientRect();
-
-  // leftEdge.value  = contentRect.left > containerRect.left;
-  // rightEdge.value = contentRect.right < containerRect.right;
-
-  const rightEdge  =  (contentRect.right - containerRect.right)*-1
-  const contentW = sliderContainer.value.clientWidth
-  const distance = contentRect.left + contentW;
-  // console.log(`rightEdge ${rightEdge}`)
-  // console.log(`leftEdege ${leftEdgeInView}`)
-  // console.log(`rightEdege ${rightEdgeInView}`)
- // console.log( `containerLeft ${containerRect.right}`)
-  //console.log(`containerRectRLeft ${containerRect.left}`, `contentRectLeft ${contentRect.left}`)
- // console.log(`containerRectRight ${containerRect.right}`, `contentRectRight ${contentRect.right}`)
- // console.log(`contentW ${contentContainer.value.clientWidth}`)
- // console.log(`Left Edge Closer to Center By: ${leftEdgeComparison}, Right Edge Closer to Center By: ${rightEdgeComparison}`);
-}
-
 
 onMounted(async() => {
-    nextTick(()=>{
-      // console.log(`contentContainer: ${contentContainer.value.clientWidth - sliderContainer.value.clientWidth}`)
-      // currentPosition.value = -2113
-    })
-  
  
-
 })
 </script>
 
