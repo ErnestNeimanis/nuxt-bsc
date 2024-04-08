@@ -16,8 +16,8 @@ const lastPosition = ref(0);
 const velocity = ref(0);
 const lastTime = ref(0);
 
-const leftEdge = ref(0)
-const rightEdge = ref(0)
+const leftEdge = ref(true)
+const rightEdge = ref(false)
 
 
 function startDragging(event) {
@@ -57,6 +57,8 @@ function stopDragging() {
 
   // Apply inertia
   const inertia = () => {
+    //console.log("inertia")
+    
     currentPosition.value += velocity.value * 5; // Adjust inertia factor here
     velocity.value *= 0.95; // Adjust friction here
     if (Math.abs(velocity.value) > 0.01) {
@@ -71,13 +73,15 @@ function checkEdges() {
   const containerRect = sliderContainer.value.getBoundingClientRect();
   const contentRect = contentContainer.value.getBoundingClientRect();
 
-  const leftEdgeInView  = contentRect.left > containerRect.left;
-  const rightEdgeInView = contentRect.right < containerRect.right;
+ leftEdge.value  = contentRect.left > containerRect.left;
+  rightEdge.value = contentRect.right < containerRect.right;
+
+  // const rightEdge =  (contentRect.right - containerRect.right)*-1
   const contentW = sliderContainer.value.clientWidth
   const distance = contentRect.left + contentW;
-
-  console.log(`leftEdege ${leftEdgeInView}`)
-  console.log(`rightEdege ${rightEdgeInView}`)
+  //console.log(`rightEdge ${rightEdge}`)
+  // console.log(`leftEdege ${leftEdgeInView}`)
+  // console.log(`rightEdege ${rightEdgeInView}`)
  // console.log( `containerLeft ${containerRect.right}`)
   //console.log(`containerRectRLeft ${containerRect.left}`, `contentRectLeft ${contentRect.left}`)
  // console.log(`containerRectRight ${containerRect.right}`, `contentRectRight ${contentRect.right}`)
@@ -87,9 +91,9 @@ function checkEdges() {
 
 
 onMounted(async() => {
-    const response = await posts.getPost({ category:"galleries",slug:"my-test-gallery"});
-    const images = html.extractImageUrls(response.content)
-    imageList.value = [...imageList.value,...images];
+    // const response = await posts.getPost({ category:"galleries",slug:"my-test-gallery"});
+    // const images = html.extractImageUrls(response.content)
+    // imageList.value = [...imageList.value,...images];
     
 
     nextTick(()=>{
@@ -123,19 +127,7 @@ onMounted(async() => {
     
          <div ref="contentContainer" class="flex flex-nowrap gap-5 h-72 "   >
           <slot></slot>
-            <!-- <div v-for="image in imageList" :key="image" class="ratio flex-shrink-0  h-72  bg-blue-500"
-          
-            >
-                <div class="w-full h-2/3 border-4">
-                     <img :src="image" class="object-cover h-full w-full" alt="">
-                </div>
-                <div class="h-1/3 flex justify-center items-center ">
-                    <div class="px-4 overflow-hidden overflow-ellipsis">
-                        <span class="whitespace-nowrap ">
-                            Some textssssss</span>
-                    </div>
-                </div>
-            </div> -->
+       
       
   </div>
      
