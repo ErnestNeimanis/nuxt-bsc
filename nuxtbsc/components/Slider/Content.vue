@@ -16,8 +16,8 @@ const lastPosition = ref(0);
 const velocity = ref(0);
 const lastTime = ref(0);
 
-const leftEdge = ref(true)
-const rightEdge = ref(false)
+// const leftEdge = ref(true)
+// const rightEdge = ref(false)
 
 
 function startDragging(event) {
@@ -40,7 +40,7 @@ function dragging(event) {
   const x = event.type.includes('mouse') ? event.pageX : event.touches[0].pageX;
   const delta = x - lastPosition.value;
   lastPosition.value = x;
-  currentPosition.value += delta;
+  currentPosition.value += adjustWithinBounds(currentPosition.value,delta);
  
   // Calculate velocity for inertia
   const now = performance.now();
@@ -49,6 +49,7 @@ function dragging(event) {
   lastTime.value = now;
 }
 
+  const inertiaActive = ref(false)
 function stopDragging() {
   if (!isDragging.value) return;
   isDragging.value = false;
@@ -56,30 +57,55 @@ function stopDragging() {
   document.removeEventListener('touchmove', dragging);
 
   // Apply inertia
+
   const inertia = () => {
-    //console.log("inertia")
-    
-    currentPosition.value += velocity.value * 5; // Adjust inertia factor here
-    velocity.value *= 0.95; // Adjust friction here
+    inertiaActive.value = true;
+    const inertiaFactor = velocity.value * 5
+
+    currentPosition.value += adjustWithinBounds(currentPosition.value,inertiaFactor); // Adjust inertia factor here
+    velocity.value *= 0.99; // Adjust friction here
     if (Math.abs(velocity.value) > 0.01) {
       requestAnimationFrame(inertia);
+    } else{
+      inertiaActive.value = false;
     }
   };
   requestAnimationFrame(inertia);
 }
+
+
+
+
+watch(inertiaActive,()=>{
+  console.log(`inertiaActive: ${inertiaActive.value}`)
+})
+
+function adjustWithinBounds(current, adjustment) {
+  const overflow = 20
+
+  const lowerBound = -(contentContainer.value.clientWidth - sliderContainer.value.clientWidth) +overflow
+  const upperBound = 0 +overflow;
+  
+
+  let newValue = current + adjustment;
+  newValue = Math.max(lowerBound, Math.min(upperBound, newValue));
+  let adjustedAmount = newValue - current;
+  return adjustedAmount;
+}
+
 
 function checkEdges() {
   const viewportCenter = window.innerWidth / 2;
   const containerRect = sliderContainer.value.getBoundingClientRect();
   const contentRect = contentContainer.value.getBoundingClientRect();
 
- leftEdge.value  = contentRect.left > containerRect.left;
-  rightEdge.value = contentRect.right < containerRect.right;
+  // leftEdge.value  = contentRect.left > containerRect.left;
+  // rightEdge.value = contentRect.right < containerRect.right;
 
-  // const rightEdge =  (contentRect.right - containerRect.right)*-1
+  const rightEdge  =  (contentRect.right - containerRect.right)*-1
   const contentW = sliderContainer.value.clientWidth
   const distance = contentRect.left + contentW;
-  //console.log(`rightEdge ${rightEdge}`)
+  // console.log(`rightEdge ${rightEdge}`)
   // console.log(`leftEdege ${leftEdgeInView}`)
   // console.log(`rightEdege ${rightEdgeInView}`)
  // console.log( `containerLeft ${containerRect.right}`)
@@ -91,16 +117,12 @@ function checkEdges() {
 
 
 onMounted(async() => {
-    // const response = await posts.getPost({ category:"galleries",slug:"my-test-gallery"});
-    // const images = html.extractImageUrls(response.content)
-    // imageList.value = [...imageList.value,...images];
-    
-
     nextTick(()=>{
-      checkEdges();
+      // console.log(`contentContainer: ${contentContainer.value.clientWidth - sliderContainer.value.clientWidth}`)
+      // currentPosition.value = -2113
     })
   
-  
+ 
 
 })
 </script>

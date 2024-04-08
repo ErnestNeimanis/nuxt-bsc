@@ -27,7 +27,7 @@ onMounted(async() => {
 
 <template>
  <div class="w-full px-8">
-    <SliderContent> 
+    <SliderContent v-if="imageList.length > 0" > 
 
   <div v-for="image in imageList" :key="image" class="ratio  h-72  bg-blue-500"
           
