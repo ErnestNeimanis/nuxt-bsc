@@ -12,7 +12,7 @@
     <slot></slot>
   </main>
   <footer>
-    this is footer
+    <FooterContent/>
   </footer>
 </div>
 

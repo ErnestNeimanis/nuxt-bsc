@@ -4,7 +4,7 @@ import { useSlideInMenu } from '~/stores/useSlideInMenu'
 import  {usePosts} from '~/stores/usePosts'
 import { onMounted, nextTick } from 'vue';
 import {useWindowSize} from "@/composables/useWindowSize"
-import {useInView, useInView_v2, useNotInView} from "@/composables/useInView"
+import {useInView, useNotInView} from "@/composables/useInView"
 import {useScrollHandler} from "@/composables/useScrollHandler"
 
 const props = defineProps({
@@ -68,7 +68,7 @@ nextTick(() =>{
       </div>
     </div>
 
-    <div v-if="hasMore" ref="loader" class="flex justify-center h-12">
+    <div v-if="loaderInView" ref="loader" class="flex justify-center h-12">
       <GadgetsLoader/>
     </div>
   </div>

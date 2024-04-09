@@ -21,13 +21,15 @@ const route = useRoute();
 const router = useRouter();
 const {smallWindow, mediumWindow, largeWindow} = useWindowSize();
 const scroll = useScrollHandler();
-const inView = useInView();
 
 const wpPosts = usePosts();
 const html = useHTMLContent();
+//
+const myel = ref(null);
+
 
 onMounted(()=>{
-
+   
 })
 
 onUnmounted(() => {
@@ -37,9 +39,10 @@ onUnmounted(() => {
 
 
 
+
 </script>
 <template>
-    <div>
-        
+    <div ref="myel" class="bg-stone-600 h-56 ">
+
     </div>
 </template>
