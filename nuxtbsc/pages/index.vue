@@ -43,7 +43,7 @@ onMounted(async() => {
                 <div class="h-1/3 flex justify-center items-center ">
                     <div class="px-4 overflow-hidden overflow-ellipsis">
                         <span class="whitespace-nowrap ">
-                            Some textssssss</span>
+                            Some textssssss</span> 
                     </div>
                 </div>
             </div>
