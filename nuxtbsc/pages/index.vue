@@ -17,14 +17,9 @@ onMounted(async() => {
     const images = html.extractImageUrls(response.content)
     imageList.value = [...imageList.value,...images];
     
-
     nextTick(()=>{
-    
-     
-    })
-  
-  
 
+    })
 })
 
 
