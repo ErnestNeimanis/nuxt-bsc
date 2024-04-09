@@ -8,12 +8,10 @@ defineExpose({
   move
 })
 
-const posts = usePosts();
-const html = useHTMLContent();
-const imageList = ref([])
+//
+
 
 const contentContainer = ref(null)
-
 const sliderContainer = ref(null);
 const sliderContent = ref(null);
 const isDragging = ref(false);
@@ -22,7 +20,9 @@ const currentPosition = ref(0);
 const lastPosition = ref(0);
 const velocity = ref(0);
 const lastTime = ref(0);
+const inertiaActive = ref(false)
 
+//styling
 const sliderElementOverflow = ref(50)
 const scrollInterval = ref(null);
 
@@ -31,37 +31,23 @@ const transition = ref(false)
 const transitionTimeout = ref(null)
 
 
-function moveLeft(amount=1){
- if(notFilled()) return;
- addSmoothSlide();
- const distance = sliderContent.value.clientWidth*amount
- currentPosition.value += adjustWithinBounds(currentPosition.value,-distance);
-}
-function moveRight(amount = 1) {
-  if (notFilled()) return;
-  addSmoothSlide();
-  const distance = sliderContent.value.clientWidth * amount;
-  currentPosition.value += adjustWithinBounds(currentPosition.value, distance);
-}
-function move(amount=1){
-   if(notFilled()) return;
-    currentPosition.value += adjustWithinBounds(amount);
-}
-
-
+//utils
 function notFilled(){
   return contentContainer.value.clientWidth < sliderContainer.value.clientWidth
 }
 
+function adjustWithinBounds(current, adjustment,overflow = 0) {
 
-const handleWheel = (event) => {
-  if (event.deltaX > 0) {
-    moveLeft(0.05)
-  } else if (event.deltaX < 0) {
-  moveRight(0.05);
-  }
-};
+  const lowerBound = -(contentContainer.value.clientWidth - sliderContainer.value.clientWidth) -overflow
+  const upperBound = 0 +overflow;
 
+  let newValue = current + adjustment;
+  newValue = Math.max(lowerBound, Math.min(upperBound, newValue));
+  let adjustedAmount = newValue - current;
+  return adjustedAmount;
+}
+
+//visual features
 function addSmoothSlide(time=200 ){
   clearTimeout(transitionTimeout.value)
   transition.value = true
@@ -70,6 +56,45 @@ function addSmoothSlide(time=200 ){
   }, time);
 }
 
+function readjustSlider(){
+
+  const overflow = sliderElementOverflow.value;
+  const rightSide = -(contentContainer.value.clientWidth - sliderContainer.value.clientWidth)
+  if(currentPosition.value < rightSide){
+    currentPosition.value = rightSide;
+    return
+  }
+  const leftSide = 0;
+  if(currentPosition.value > leftSide ){
+    currentPosition.value = 0;
+  }
+}
+
+//manual movement
+
+function moveLeft(amount=1){
+ if(notFilled()) return;
+ addSmoothSlide();
+ const distance = sliderContent.value.clientWidth*amount
+ currentPosition.value += adjustWithinBounds(currentPosition.value,-distance);
+
+}
+function moveRight(amount = 1) {
+  if (notFilled()) return;
+  addSmoothSlide();
+  const distance = sliderContent.value.clientWidth * amount;
+  currentPosition.value += adjustWithinBounds(currentPosition.value, distance);
+
+}
+function move(amount=0){
+   if(notFilled()) return;
+    const distance = sliderContent.value.clientWidth*amount
+    currentPosition.value += adjustWithinBounds(distance);
+}
+
+
+
+//dragging
 
 function startDragging(event) {
 
@@ -103,8 +128,6 @@ function dragging(event) {
   velocity.value = delta / timeDelta;
   lastTime.value = now;
 }
-
-  const inertiaActive = ref(false)
 
 function stopDragging() {
 
@@ -141,20 +164,18 @@ function stopDragging() {
   }
 }
 
+//mousewheel
 
-function readjustSlider(){
+function handleWheel(event){
+  if (event.deltaX > 0) {
+    moveLeft(0.05)
+  } else if (event.deltaX < 0) {
+  moveRight(0.05);
+  }
+};
 
-  const overflow = sliderElementOverflow.value;
-  const rightSide = -(contentContainer.value.clientWidth - sliderContainer.value.clientWidth)
-  if(currentPosition.value < rightSide){
-    currentPosition.value = rightSide;
-    return
-  }
-  const leftSide = 0;
-  if(currentPosition.value > leftSide ){
-    currentPosition.value = 0;
-  }
-}
+
+//watch
 
 watch(inertiaActive,()=>{
  if(!inertiaActive.value){
@@ -162,37 +183,28 @@ watch(inertiaActive,()=>{
   }
 })
 
-function adjustWithinBounds(current, adjustment,overflow = 0) {
-
-  const lowerBound = -(contentContainer.value.clientWidth - sliderContainer.value.clientWidth) -overflow
-  const upperBound = 0 +overflow;
-
-
-  let newValue = current + adjustment;
-  newValue = Math.max(lowerBound, Math.min(upperBound, newValue));
-  let adjustedAmount = newValue - current;
-  return adjustedAmount;
-}
-
 watch(transition,()=>{
-  console.log(transition.value)
+ 
 })
+
+
 </script>
 
 <template>
   <div
     ref="sliderContainer"
-    class="slider-container bg-blue-100 w-full border-4 overflow-scroll"
-    @mousedown="startDragging"
-    @touchstart="startDragging"
-    @mouseup="stopDragging"
-    @mouseleave="stopDragging"
+    class="slider-container  w-full  overflow-scroll"
+
+    @mousedown="('startDragging')"
+    @touchstart="(startDragging)"
+    @mouseup="('stopDragging')"
+    @mouseleave="('stopDragging')"
     @touchend="stopDragging"
     @mousewheel="handleWheel"
   >
     <div
       ref="sliderContent"
-      class="border-4 bg-black"
+      class=" "
       :class="{'slider-transition-slow': transition, 'slider-transition-fast' : !transition}"
       :style="{ transform: `translateX(${currentPosition}px)` }"
       style="width: max-content"
@@ -205,9 +217,6 @@ watch(transition,()=>{
 </template>
 
 <style scoped>
-.ratio {
-  aspect-ratio: 10 / 10;
-}
 
 .slider-container {
   overflow: hidden;
