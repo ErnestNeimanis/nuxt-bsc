@@ -63,7 +63,8 @@ const phone = ref([
   },
   {
     title: "WhatsApp Contact",
-    href: "https://wa.me/1234567890",
+    href: `https://wa.me/1234567890
+    ?text=${encodeURIComponent("Hello, I'm interested in your services.")}`,
     icon: "bi bi-whatsapp"
   }
 ]);
@@ -71,9 +72,18 @@ const phone = ref([
 
 </script>
 <template>
-    <div class="sticky bottom-0 bg-stone-600 min-h-36 flex justify-center items-center px-2 py-12 border" >
-        <div class="flex flex-wrap justify-evenly items-center gap-4 h-4/5 w-full bg-blue-700">
-            <div v-for="i in 3" :key="i" class="h-36 flex-grow min-w-[400px] border-4 ">
+    <div class="sticky bottom-0 bg-stone-900 min-h-36 flex justify-center items-center px-2 py-12 border" >
+        <div class="flex flex-wrap justify-evenly items-center gap-4 h-4/5 w-full bg-stone-600">
+            <div  class="h-36 flex-grow min-w-[400px] border-4 ">
+                
+            </div>
+             <div  class="h-36 flex-grow min-w-[400px] border-4 ">
+                
+            </div>
+             <div  class="h-36 flex-grow min-w-[400px] border-4 ">
+                
+            </div>
+              <div  class="h-36 flex-grow min-w-[400px] border-4 ">
                 
             </div>
         
