@@ -10,6 +10,8 @@ const posts = usePosts();
 const html = useHTMLContent();
 const imageList = ref([])
 
+const slider = ref(null)
+
 onMounted(async() => {
     const response = await posts.getPost({ category:"galleries",slug:"my-test-post"});
     const images = html.extractImageUrls(response.content)
@@ -17,17 +19,20 @@ onMounted(async() => {
     
 
     nextTick(()=>{
-  
+    
+     
     })
   
   
 
 })
+
+
 </script>
 
 <template>
  <div class="w-full px-8">
-    <Slider v-if="imageList.length > 0"  class="h-72"> 
+    <Slider ref="slider" v-if="imageList.length > 0"  class="h-72"> 
 
   <div v-for="image in imageList" :key="image" class="ratio  h-72  bg-blue-500"
           
@@ -44,6 +49,9 @@ onMounted(async() => {
             </div>
 
     </Slider>
+    <div>
+      <button @click="slider.moveRight(0.2)" class="border-4 p-4 ">click</button>
+    </div>
  </div>
 </template>
 <style scoped>

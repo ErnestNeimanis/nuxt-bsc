@@ -1,6 +1,13 @@
 <script setup lang="js">
 import {usePosts } from "~/stores/usePosts"
 import {useHTMLContent} from "~/composables/useHTMLContent"
+
+defineExpose({
+  moveLeft,
+  moveRight,
+  move
+})
+
 const posts = usePosts();
 const html = useHTMLContent();
 const imageList = ref([])
@@ -16,16 +23,31 @@ const lastPosition = ref(0);
 const velocity = ref(0);
 const lastTime = ref(0);
 
-const sliderElementOverflow = ref(20)
+const sliderElementOverflow = ref(50)
+
+function moveLeft(amount=1){
+ if(notFilled()) return;
+ const distance = sliderContent.value.clientWidth*amount
+ currentPosition.value += adjustWithinBounds(currentPosition.value,-distance);
+}
+function moveRight(amount = 1) {
+  if (notFilled()) return;
+  const distance = sliderContent.value.clientWidth * amount;
+  currentPosition.value += adjustWithinBounds(currentPosition.value, distance);
+}
+function move(amount=1){
+   if(notFilled()) return;
+    currentPosition.value += adjustWithinBounds(amount);
+}
 
 
-// const leftEdge = ref(true)
-// const rightEdge = ref(false)
-
+function notFilled(){
+  return contentContainer.value.clientWidth < sliderContainer.value.clientWidth
+}
 
 function startDragging(event) {
-  
-  if(contentContainer.value.clientWidth < sliderContainer.value.clientWidth){
+
+  if(notFilled()){
     return
   }
 
@@ -36,7 +58,6 @@ function startDragging(event) {
   lastTime.value = performance.now();
   velocity.value = 0;
 
-  // Add event listeners for mousemove and touchmove
   document.addEventListener('mousemove', dragging);
   document.addEventListener('touchmove', dragging);
 
@@ -48,7 +69,7 @@ function dragging(event) {
   const x = event.type.includes('mouse') ? event.pageX : event.touches[0].pageX;
   const delta = x - lastPosition.value;
   lastPosition.value = x;
-  currentPosition.value += adjustWithinBounds(currentPosition.value,delta);
+  currentPosition.value += adjustWithinBounds(currentPosition.value,delta,sliderElementOverflow.value);
 
   // Calculate velocity for inertia
   const now = performance.now();
@@ -60,7 +81,7 @@ function dragging(event) {
   const inertiaActive = ref(false)
 
 function stopDragging() {
- 
+
   if (!isDragging.value) return;
 
   isDragging.value = false;
@@ -73,7 +94,7 @@ function stopDragging() {
     inertiaActive.value = true;
     const inertiaFactor = velocity.value * 5
 
-    currentPosition.value += adjustWithinBounds(currentPosition.value,inertiaFactor); // Adjust inertia factor here
+    currentPosition.value += adjustWithinBounds(currentPosition.value,inertiaFactor,sliderElementOverflow.value); // Adjust inertia factor here
     velocity.value *= 0.99; // Adjust friction here
 
     if(currentPosition.value >= 0 ||
@@ -115,8 +136,7 @@ watch(inertiaActive,()=>{
   }
 })
 
-function adjustWithinBounds(current, adjustment) {
-  const overflow = 50
+function adjustWithinBounds(current, adjustment,overflow = 0) {
 
   const lowerBound = -(contentContainer.value.clientWidth - sliderContainer.value.clientWidth) -overflow
   const upperBound = 0 +overflow;
@@ -127,19 +147,12 @@ function adjustWithinBounds(current, adjustment) {
   let adjustedAmount = newValue - current;
   return adjustedAmount;
 }
-
-
-onMounted(async() => {
-
-})
-
-
 </script>
 
 <template>
   <div
     ref="sliderContainer"
-    class="slider-container bg-blue-100 w-full  border-4 overflow-scroll"
+    class="slider-container bg-blue-100 w-full border-4 overflow-scroll"
     @mousedown="startDragging"
     @touchstart="startDragging"
     @mouseup="stopDragging"
@@ -152,7 +165,7 @@ onMounted(async() => {
       :style="{ transform: `translateX(${currentPosition}px)` }"
       style="width: max-content"
     >
-      <div ref="contentContainer" class="flex flex-nowrap gap-5 ">
+      <div ref="contentContainer" class="flex flex-nowrap gap-5">
         <slot></slot>
       </div>
     </div>
@@ -168,7 +181,7 @@ onMounted(async() => {
   overflow: hidden;
 }
 .slider-content {
-  transition: transform 0.2s ease-out;
+  transition: transform 0.05s ease-out;
   will-change: transform;
 }
 </style>
