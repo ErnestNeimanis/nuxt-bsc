@@ -39,12 +39,14 @@ onMounted(async() => {
     </Slider>
     <div class="flex justify-between w-full">
       <div>
-        <button @click="slider.moveRight(0.2)" class="border-4 p-4">click</button>
+        <button @click="slider.moveRight(0.2)" class="border-4 p-4">
+             <i class="bi bi-arrow-left text-black"></i>
+        </button>
       </div>
       <div>
         <button @click="slider.moveRight(0.2)" class="border-4 p-4">
             <i class="bi bi-arrow-right text-black"></i>
-          </button>
+          </button>  
       </div>
     </div>
   </div>
