@@ -1,6 +1,6 @@
 <script setup lang="js">
 import axios from "axios"
-import { useSlideInMenu } from '~/stores/useSlideInMenu'
+
 import  {usePosts} from '~/stores/usePosts'
 
 import {useWindowSize} from "@/composables/useWindowSize"

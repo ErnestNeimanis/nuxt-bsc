@@ -8,9 +8,12 @@
       <HeaderNavBar/>
   </header>
    
-  <main>
+  <main class="min-h-[90vh]">
     <slot></slot>
   </main>
+  <footer>
+    this is footer
+  </footer>
 </div>
 
 
