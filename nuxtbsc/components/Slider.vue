@@ -24,14 +24,22 @@ const velocity = ref(0);
 const lastTime = ref(0);
 
 const sliderElementOverflow = ref(50)
+const scrollInterval = ref(null);
+
+//smooth slide props
+const transition = ref(false)
+const transitionTimeout = ref(null)
+
 
 function moveLeft(amount=1){
  if(notFilled()) return;
+ addSmoothSlide();
  const distance = sliderContent.value.clientWidth*amount
  currentPosition.value += adjustWithinBounds(currentPosition.value,-distance);
 }
 function moveRight(amount = 1) {
   if (notFilled()) return;
+  addSmoothSlide();
   const distance = sliderContent.value.clientWidth * amount;
   currentPosition.value += adjustWithinBounds(currentPosition.value, distance);
 }
@@ -44,6 +52,24 @@ function move(amount=1){
 function notFilled(){
   return contentContainer.value.clientWidth < sliderContainer.value.clientWidth
 }
+
+
+const handleWheel = (event) => {
+  if (event.deltaX > 0) {
+    moveLeft(0.05)
+  } else if (event.deltaX < 0) {
+  moveRight(0.05);
+  }
+};
+
+function addSmoothSlide(time=200 ){
+  clearTimeout(transitionTimeout.value)
+  transition.value = true
+  transitionTimeout.value = setTimeout(() => {
+  transition.value = false
+  }, time);
+}
+
 
 function startDragging(event) {
 
@@ -147,6 +173,10 @@ function adjustWithinBounds(current, adjustment,overflow = 0) {
   let adjustedAmount = newValue - current;
   return adjustedAmount;
 }
+
+watch(transition,()=>{
+  console.log(transition.value)
+})
 </script>
 
 <template>
@@ -158,10 +188,12 @@ function adjustWithinBounds(current, adjustment,overflow = 0) {
     @mouseup="stopDragging"
     @mouseleave="stopDragging"
     @touchend="stopDragging"
+    @mousewheel="handleWheel"
   >
     <div
       ref="sliderContent"
-      class="slider-content border-4 bg-black"
+      class="border-4 bg-black"
+      :class="{'slider-transition-slow': transition, 'slider-transition-fast' : !transition}"
       :style="{ transform: `translateX(${currentPosition}px)` }"
       style="width: max-content"
     >
@@ -180,7 +212,11 @@ function adjustWithinBounds(current, adjustment,overflow = 0) {
 .slider-container {
   overflow: hidden;
 }
-.slider-content {
+.slider-transition-slow {
+  transition: transform 0.2s ease-out;
+  will-change: transform;
+}
+.slider-transition-fast {
   transition: transform 0.05s ease-out;
   will-change: transform;
 }
