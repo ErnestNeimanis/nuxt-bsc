@@ -36,13 +36,47 @@ onUnmounted(() => {
 
 })
 
+const social = ref([
+    {
+        title: "youtube",
+        icon: "bi bi-youtube",
+        url:"youtube.com",
+    },
+      {
+        title: "facebook",
+        icon: "bi bi-facebook",
+        url:"facebook.com",
+    },
+      {
+        title: "instagram",
+        icon: "bi bi-instagram",
+        url:"instagram.com",
+    },
+    
+])
 
-
+const phone = ref([
+  {
+    title: "Phone Contact",
+    href: "tel:+1234567890",
+    icon: "bi bi-telephone"
+  },
+  {
+    title: "WhatsApp Contact",
+    href: "https://wa.me/1234567890",
+    icon: "bi bi-whatsapp"
+  }
+]);
 
 
 </script>
 <template>
-    <div ref="myel" class="bg-stone-600 h-56 ">
-
+    <div class="sticky bottom-0 bg-stone-600 min-h-36 flex justify-center items-center px-2 py-12 border" >
+        <div class="flex flex-wrap justify-evenly items-center gap-4 h-4/5 w-full bg-blue-700">
+            <div v-for="i in 3" :key="i" class="h-36 flex-grow min-w-[400px] border-4 ">
+                
+            </div>
+        
+        </div>
     </div>
 </template>
