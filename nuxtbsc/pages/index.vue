@@ -27,7 +27,7 @@ onMounted(async() => {
 
 <template>
  <div class="w-full px-8">
-    <SliderContent v-if="imageList.length > 0"  class="h-72"> 
+    <Slider v-if="imageList.length > 0"  class="h-72"> 
 
   <div v-for="image in imageList" :key="image" class="ratio  h-72  bg-blue-500"
           
@@ -43,7 +43,7 @@ onMounted(async() => {
                 </div>
             </div>
 
-    </SliderContent>
+    </Slider>
  </div>
 </template>
 <style scoped>

@@ -1,5 +1,11 @@
 <script setup lang="js">
+import {usePosts } from "~/stores/usePosts"
+import {useHTMLContent} from "~/composables/useHTMLContent"
+const posts = usePosts();
+const html = useHTMLContent();
+const imageList = ref([])
 
+const contentContainer = ref(null)
 
 const sliderContainer = ref(null);
 const sliderContent = ref(null);
@@ -10,18 +16,26 @@ const lastPosition = ref(0);
 const velocity = ref(0);
 const lastTime = ref(0);
 
-const leftEdge = ref(0)
-const rightEdge = ref(0)
+const sliderElementOverflow = ref(20)
+
+
+// const leftEdge = ref(true)
+// const rightEdge = ref(false)
 
 
 function startDragging(event) {
+  
+  if(contentContainer.value.clientWidth < sliderContainer.value.clientWidth){
+    return
+  }
+
   isDragging.value = true;
   startPosition.value = event.type.includes('mouse') ? event.pageX : event.touches[0].pageX;
 
   lastPosition.value = startPosition.value;
   lastTime.value = performance.now();
   velocity.value = 0;
-  
+
   // Add event listeners for mousemove and touchmove
   document.addEventListener('mousemove', dragging);
   document.addEventListener('touchmove', dragging);
@@ -29,13 +43,13 @@ function startDragging(event) {
 }
 
 function dragging(event) {
-  checkEdges()
+
   if (!isDragging.value) return;
   const x = event.type.includes('mouse') ? event.pageX : event.touches[0].pageX;
   const delta = x - lastPosition.value;
   lastPosition.value = x;
-  currentPosition.value += delta;
- 
+  currentPosition.value += adjustWithinBounds(currentPosition.value,delta);
+
   // Calculate velocity for inertia
   const now = performance.now();
   const timeDelta = now - lastTime.value;
@@ -43,52 +57,89 @@ function dragging(event) {
   lastTime.value = now;
 }
 
+  const inertiaActive = ref(false)
+
 function stopDragging() {
+ 
   if (!isDragging.value) return;
+
   isDragging.value = false;
   document.removeEventListener('mousemove', dragging);
   document.removeEventListener('touchmove', dragging);
 
   // Apply inertia
+
   const inertia = () => {
-    currentPosition.value += velocity.value * 5; // Adjust inertia factor here
-    velocity.value *= 0.95; // Adjust friction here
+    inertiaActive.value = true;
+    const inertiaFactor = velocity.value * 5
+
+    currentPosition.value += adjustWithinBounds(currentPosition.value,inertiaFactor); // Adjust inertia factor here
+    velocity.value *= 0.99; // Adjust friction here
+
+    if(currentPosition.value >= 0 ||
+    currentPosition.value <= -(contentContainer.value.clientWidth - sliderContainer.value.clientWidth)){
+       readjustSlider();
+      return;
+    }
+
     if (Math.abs(velocity.value) > 0.01) {
       requestAnimationFrame(inertia);
+    } else{
+      inertiaActive.value = false;
     }
   };
   requestAnimationFrame(inertia);
+  if(!inertiaActive.value){
+    readjustSlider();
+  }
 }
 
-function checkEdges() {
-  const viewportCenter = window.innerWidth / 2;
-  const containerRect = sliderContainer.value.getBoundingClientRect();
-  const contentRect = sliderContent.value.getBoundingClientRect();
 
-  const leftEdgeInView  = contentRect.left > containerRect.left;
-  const contentW = sliderContainer.value.clientWidth
-  const distance = contentRect.left + contentW;
- // console.log( `containerLeft ${containerRect.right}`)
-  //console.log(`containerRectRLeft ${containerRect.left}`, `contentRectLeft ${contentRect.left}`)
-  //console.log(`containerRectRight ${containerRect.right}`, `contentRectRight ${contentRect.right}`)
-  //console.log(`contentW ${contentW}`)
- // console.log(`Left Edge Closer to Center By: ${leftEdgeComparison}, Right Edge Closer to Center By: ${rightEdgeComparison}`);
+function readjustSlider(){
+
+  const overflow = sliderElementOverflow.value;
+  const rightSide = -(contentContainer.value.clientWidth - sliderContainer.value.clientWidth)
+  if(currentPosition.value < rightSide){
+    currentPosition.value = rightSide;
+    return
+  }
+  const leftSide = 0;
+  if(currentPosition.value > leftSide ){
+    currentPosition.value = 0;
+  }
 }
-onMounted(() => {
-  nextTick(() =>{
-    // checkEdges()
-      
-  })
+
+watch(inertiaActive,()=>{
+ if(!inertiaActive.value){
+    readjustSlider();
+  }
+})
+
+function adjustWithinBounds(current, adjustment) {
+  const overflow = 50
+
+  const lowerBound = -(contentContainer.value.clientWidth - sliderContainer.value.clientWidth) -overflow
+  const upperBound = 0 +overflow;
+
+
+  let newValue = current + adjustment;
+  newValue = Math.max(lowerBound, Math.min(upperBound, newValue));
+  let adjustedAmount = newValue - current;
+  return adjustedAmount;
+}
+
+
+onMounted(async() => {
 
 })
+
+
 </script>
-
-
 
 <template>
   <div
     ref="sliderContainer"
-    class="slider-container  bg-blue-100 w-full h-72   border-4"
+    class="slider-container bg-blue-100 w-full  border-4 overflow-scroll"
     @mousedown="startDragging"
     @touchstart="startDragging"
     @mouseup="stopDragging"
@@ -97,21 +148,24 @@ onMounted(() => {
   >
     <div
       ref="sliderContent"
-      class="slider-content border-4 bg-black  "
+      class="slider-content border-4 bg-black"
       :style="{ transform: `translateX(${currentPosition}px)` }"
       style="width: max-content"
     >
-    
-      <slot></slot>
+      <div ref="contentContainer" class="flex flex-nowrap gap-5 ">
+        <slot></slot>
+      </div>
     </div>
   </div>
 </template>
 
-
 <style scoped>
+.ratio {
+  aspect-ratio: 10 / 10;
+}
+
 .slider-container {
   overflow: hidden;
-  cursor: grab;
 }
 .slider-content {
   transition: transform 0.2s ease-out;
