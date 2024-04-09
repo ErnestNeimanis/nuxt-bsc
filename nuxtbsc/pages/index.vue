@@ -11,7 +11,7 @@ const html = useHTMLContent();
 const imageList = ref([])
 
 onMounted(async() => {
-    const response = await posts.getPost({ category:"galleries",slug:"my-test-gallery"});
+    const response = await posts.getPost({ category:"galleries",slug:"my-test-post"});
     const images = html.extractImageUrls(response.content)
     imageList.value = [...imageList.value,...images];
     
@@ -27,7 +27,7 @@ onMounted(async() => {
 
 <template>
  <div class="w-full px-8">
-    <SliderContent v-if="imageList.length > 0" > 
+    <SliderContent v-if="imageList.length > 0"  class="h-72"> 
 
   <div v-for="image in imageList" :key="image" class="ratio  h-72  bg-blue-500"
           
