@@ -21,7 +21,6 @@ const route = useRoute();
 const router = useRouter();
 const {smallWindow, mediumWindow, largeWindow} = useWindowSize();
 const scroll = useScrollHandler();
-const inView = useInView();
 
 const wpPosts = usePosts();
 const html = useHTMLContent();
