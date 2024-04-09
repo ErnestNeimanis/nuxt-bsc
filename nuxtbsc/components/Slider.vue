@@ -10,7 +10,6 @@ defineExpose({
 
 //
 
-
 const contentContainer = ref(null)
 const sliderContainer = ref(null);
 const sliderContent = ref(null);
@@ -141,10 +140,12 @@ function stopDragging() {
 
   const inertia = () => {
     inertiaActive.value = true;
-    const inertiaFactor = velocity.value * 5
 
-    currentPosition.value += adjustWithinBounds(currentPosition.value,inertiaFactor,sliderElementOverflow.value); // Adjust inertia factor here
-    velocity.value *= 0.99; // Adjust friction here
+    const inertiaFactor = velocity.value * 5  
+    const friction = 0.99
+    
+    currentPosition.value += adjustWithinBounds(currentPosition.value,inertiaFactor,sliderElementOverflow.value); 
+    velocity.value *= friction; 
 
     if(currentPosition.value >= 0 ||
     currentPosition.value <= -(contentContainer.value.clientWidth - sliderContainer.value.clientWidth)){
