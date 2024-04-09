@@ -20,7 +20,7 @@ onMounted(async() => {
 </script>
 
 <template>
-  <div class="w-full max-w-4xl px-8">
+  <div class="w-full px-8">
     <Slider ref="slider" v-if="imageList.length > 0" class="h-72 ">
       <div v-for="image in imageList" :key="image" class="ratio h-72 ">
         <div class="w-full h-2/3 ">
