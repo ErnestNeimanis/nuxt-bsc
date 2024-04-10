@@ -12,11 +12,10 @@ export default defineNuxtConfig({
   },
   modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt"],
   runtimeConfig: {
-    public: {
-      MAIL_USER: process.env.MAIL_USER,
-      MAIL_PASSWORD: process.env.MAIL_PASSWORD,
-      CONTACT_MAIL: process.env.CONTACT_MAIL,
-    },
+    // These are server-side only now, not exposed to the client
+    MAIL_USER: process.env.MAIL_USER,
+    MAIL_PASSWORD: process.env.MAIL_PASSWORD,
+    CONTACT_MAIL: process.env.CONTACT_MAIL,
   },
   devtools: { enabled: true },
 });

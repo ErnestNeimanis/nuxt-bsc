@@ -5,6 +5,8 @@ export default defineEventHandler(async (event) => {
 
   const config = useRuntimeConfig();  
   const body = await readBody(event);
+
+  console.log(`user ${config.MAIL_USER} password ${config.MAIL_PASSWORD}`)
   
   const transporter = nodemailer.createTransport({
     service: 'gmail',
