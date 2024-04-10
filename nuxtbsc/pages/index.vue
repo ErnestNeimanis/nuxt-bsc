@@ -19,7 +19,9 @@ onMounted(async() => {
 
 <template>
   <div>
+      <div class="mt-24"></div>
      <SampleSliderGallery />
+    
   </div>
 </template>
 
