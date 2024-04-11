@@ -32,17 +32,16 @@ async function load(){
   const response = await posts.nextPage()
   postList.value = [...postList.value, ...response]
   hasMore.value = [...response].length > 0
-  console.log(`hasmore ${hasMore.value}`)
   return [...response];
 }
 
 onMounted(async() => {
  await getPosts()
-  
+
 nextTick(() =>{
-  
+
  useInView(loader.value,async() =>{
-        console.log("inview")  
+
     loaderInView.value = true;
     let loaded = await load();
     hasMore.value = loaded.length > 0
@@ -62,28 +61,25 @@ nextTick(() =>{
 })
 
 })
-
 </script>
 <template>
-
-  <div v-if="postList" class="flex flex-col items-center pt-12">
-    <div class="flex flex-col gap-4 ">
-      <div v-for="post in postList" :key="post.title">
-            <PostPreviewV2 :post="post" class=""/>
+  <div v-if="postList" class="flex flex-col items-center pt-0">
+    <div class="flex flex-col items-center gap-4">
+      <div v-for="post in postList" :key="post.title" class="">
+        <PostPreviewV2 :post="post" class="" />
       </div>
     </div>
 
     <div v-if="hasMore" ref="loader" class="flex justify-center h-12">
-      <GadgetsLoader/>
+      <GadgetsLoader />
     </div>
   </div>
-
 </template>
 <style scoped>
-  .thumbnail-grid{
-    @apply grid 
+.thumbnail-grid {
+  @apply grid 
     grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3
     px-8 sm:px-8 md:px-12 
-    gap-12 my-4  
-  }
+    gap-12 my-4;
+}
 </style>
