@@ -15,30 +15,17 @@ const mapContainer = ref(null);
 const loc = ref("")
 
 onMounted(async() =>{
-window.alert = function() { };
-window.confirm = function() { return true;  };
-window.prompt = function() { return null;  };
-
-  navigator.geolocation.getCurrentPosition((position) => {
-      // Extract latitude and longitude from the position object
-      const lat = position.coords.latitude;
-      const lng = position.coords.longitude
-
-      // Log the coordinates (for debugging purposes)
-      console.log(`Latitude: ${lat}, Longitude: ${lng}`);
-      loc.value = `Latitude: ${lat}, Longitude: ${lng}`
-})
 
 })
 
 
 async function handleSubmit() {
   try {
-    // Here you make the POST request to your backend API
+
     const response = await axios.post('/api/contact', form.value);
-    // Assuming your API returns a message upon success
+
     responseMessage.value = response.data.message;
-    // Optionally, clear the form or give user feedback
+  
     console.log("Email sent successfully:", response.data);
     form.value = { email: '', subject: '', message: '' }; // Clear form after submission
   } catch (error) {
