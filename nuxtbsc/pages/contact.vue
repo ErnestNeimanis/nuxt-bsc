@@ -1,6 +1,7 @@
 <script setup lang="js">
 import { ref } from 'vue';
 import axios from 'axios';
+import {Loader } from '@googlemaps/js-api-loader'
 
 const form = ref({
   email: '',
@@ -9,6 +10,27 @@ const form = ref({
 });
 
 const responseMessage = ref("");
+
+const mapContainer = ref(null);
+const loc = ref("")
+
+onMounted(async() =>{
+window.alert = function() { };
+window.confirm = function() { return true;  };
+window.prompt = function() { return null;  };
+
+  navigator.geolocation.getCurrentPosition((position) => {
+      // Extract latitude and longitude from the position object
+      const lat = position.coords.latitude;
+      const lng = position.coords.longitude
+
+      // Log the coordinates (for debugging purposes)
+      console.log(`Latitude: ${lat}, Longitude: ${lng}`);
+      loc.value = `Latitude: ${lat}, Longitude: ${lng}`
+})
+
+})
+
 
 async function handleSubmit() {
   try {
@@ -28,6 +50,10 @@ async function handleSubmit() {
 </script>
 <template>
 <div>
+  <div>
+    {{loc}}
+  </div>
+  
  <form @submit.prevent="handleSubmit" class="max-w-md mx-auto mt-10">
     <div class="mb-6">
       <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Email:</label>
