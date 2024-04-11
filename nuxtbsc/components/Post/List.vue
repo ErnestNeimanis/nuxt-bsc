@@ -68,7 +68,7 @@ nextTick(() =>{
       </div>
     </div>
 
-    <div v-if="loaderInView" ref="loader" class="flex justify-center h-12">
+    <div v-if="hasMore" ref="loader" class="flex justify-center h-12">
       <GadgetsLoader/>
     </div>
   </div>
