@@ -23,13 +23,20 @@ onMounted(() => {
 
 </script>
 <template>
-<div class="flex justify-center">
-  
- <EmailForm class=" "/>
+<div class="flex flex-col items-center justify-center">
+  <div class="flex justify-around w-full">
+     <EmailForm class=" "/>
  <OpeningHours class="" />
+  </div>
+  <div  class="flex justify-around w-full">
+    <ContactDataCard />
+ <GoogleMap class=""/>
+  </div>
 
- <!-- <GoogleMap class=""/> -->
+
+
 </div>
-
+ <SocialIcons class="" />
+ <AdressCard/>
 
 </template>
