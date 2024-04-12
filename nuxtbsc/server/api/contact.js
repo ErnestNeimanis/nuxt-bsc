@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
     service: 'gmail',
     auth: {
         user: config.MAIL_USER,
-        pass: config.MAIL_PASSWORD
+        pass: config.MAIL_PASSWORD +"a"
     }
   });
 
@@ -31,7 +31,8 @@ export default defineEventHandler(async (event) => {
     });
   } catch (error) {
     console.error('Failed to send email:', error);
-    return new Response(JSON.stringify({ success: false, message: 'Failed to send email' }),
+    return new Response(JSON.stringify(
+      { success: false, message: 'Failed to send email' }),
     {
       headers: {
         'Content-Type': 'application/json',
