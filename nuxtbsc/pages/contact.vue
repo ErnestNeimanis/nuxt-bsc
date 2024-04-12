@@ -25,7 +25,8 @@ onMounted(() => {
 <template>
 <div class="flex justify-center">
   
- <EmailForm class="w-24 "/>
+ <EmailForm class=" "/>
+ <OpeningHours class="" />
 
  <!-- <GoogleMap class=""/> -->
 </div>
