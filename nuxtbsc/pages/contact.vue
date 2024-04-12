@@ -34,9 +34,9 @@ onMounted(() => {
   </div>
 
 
-
-</div>
  <SocialIcons class="" />
  <AdressCard/>
+
+</div>
 
 </template>
