@@ -10,19 +10,20 @@ export default defineEventHandler(async (event) => {
     service: 'gmail',
     auth: {
         user: config.MAIL_USER,
-        pass: config.MAIL_PASSWORD
+        pass: `${config.MAIL_PASSWORD}`
     }
   });
 
   const mailOptions = {
     from: body.email,
     to: config.CONTACT_MAIL,
-    subject: `New Contact Form Submission from ${body.name || 'a visitor'}`, 
+    subject: `From customer page`, 
     text: `Message from ${body.name || 'a visitor'} (${body.email}): ${body.message}`, 
   };
 
   try {
     await transporter.sendMail(mailOptions);
+
     return new Response(JSON.stringify({ success: true, message: 'Email sent successfully' }), {
       headers: {
         'Content-Type': 'application/json',
@@ -30,7 +31,8 @@ export default defineEventHandler(async (event) => {
     });
   } catch (error) {
     console.error('Failed to send email:', error);
-    return new Response(JSON.stringify({ success: false, message: 'Failed to send email' }), {
+    return new Response(JSON.stringify({ success: false, message: 'Failed to send email' }),
+    {
       headers: {
         'Content-Type': 'application/json',
       },
