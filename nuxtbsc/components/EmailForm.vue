@@ -69,7 +69,7 @@ function submissionVisuals(){
 
 <template>
 
-  <div class="bg-blue-950  min-w-[350px]">
+  <div class=" bg-blue-950   min-w-[350px]">
     <form @submit.prevent="handleSubmit" class="flex flex-col space-y-4 w-full min-w-[350px]  p-2">
 
       <div class="flex flex-wrap gap-4 w-full ">
@@ -104,7 +104,7 @@ function submissionVisuals(){
 
     </form>
 
-    <div class="mb-4 h-8 text-center text-white">
+    <div class="mb-4 h-12 text-center text-white">
       {{ responseMessage }}
     </div>
   </div>
