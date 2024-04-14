@@ -76,12 +76,12 @@ function openInFullScreen(image){
 
     <div class="flex justify-between w-full">
       <div>
-        <button @mousedown="slider.moveRight(0.2)" class="border-4 p-4">
+        <button @mousedown="slider.moveRight(1)" class="border-4 p-4">
           <i class="bi bi-arrow-left text-black"></i>
         </button>
       </div>
       <div>
-        <button @mousedown="slider.moveLeft(0.2)" class="border-4 p-4">
+        <button @mousedown="slider.moveLeft(1)" class="border-4 p-4">
           <i class="bi bi-arrow-right text-black"></i>
         </button>
       </div>

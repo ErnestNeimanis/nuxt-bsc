@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
     service: 'gmail',
     auth: {
         user: config.MAIL_USER,
-        pass: config.MAIL_PASSWORD +"a"
+        pass: config.MAIL_PASSWORD
     }
   });
 
